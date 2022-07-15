@@ -4,9 +4,13 @@ import { useQuery, gql } from '@apollo/client'
 
 const CATEGORIES = gql`
   query GetCategories {
-    categories {
-      name,
-      id
+    categories{
+      data{
+        id
+        attributes{
+          name
+        }
+      }
     }
   }
 `
@@ -22,9 +26,9 @@ export default function SiteHeader() {
       <Link to="/"><h1>Ninja Reviews</h1></Link>
       <nav className="categories">
         <span>Filter reviews by category:</span>
-        {data.categories.map(category => (
+        {data.categories.data.map(category => (
           <Link key={category.id} to={`/category/${category.id}`}>
-            {category.name}
+            {category.attributes.name}
           </Link>
         ))}
       </nav>
